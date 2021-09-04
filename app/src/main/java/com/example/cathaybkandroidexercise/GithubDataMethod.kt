@@ -1,7 +1,9 @@
 package com.example.cathaybkandroidexercise
 
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.*
 import java.lang.StringBuilder
 import java.net.HttpURLConnection
@@ -10,45 +12,43 @@ import java.net.URLEncoder
 
 class GithubDataMethod {
 
-    suspend fun sendGetUsersList() {
-        val url = "https://api.github.com/users?since=1&per_page=2"
-        readData(url)
+    suspend fun sendGetUsersList(since: Int, perPage: Int): String{
+        val url = "https://api.github.com/users?since=$since&per_page=$perPage"
+        return readData(url)
     }
 
-    suspend fun sendGetUser(userName: String) {
+    suspend fun sendGetUser(userName: String): String{
         val url = "https://api.github.com/users/$userName"
-        readData(url)
+        return readData(url)
     }
 
     private suspend fun readData(url : String): String{
+        return withContext(Dispatchers.IO) {
+            val connection =
+                URL(url).openConnection() as HttpURLConnection
+            connection.setRequestProperty("Content-Type", "application/vnd.github.v3+json")
 
-        val connection =
-            URL(url).openConnection() as HttpURLConnection
-        connection.setRequestProperty("Content-Type", "application/vnd.github.v3+json")
+            try {
 
-        try {
+                BufferedReader(InputStreamReader(connection.inputStream)).use {
+                    val response = StringBuffer()
 
-            BufferedReader(InputStreamReader(connection.inputStream)).use {
-                val response = StringBuffer()
+                    var inputLine = it.readLine()
+                    while (inputLine != null) {
+                        response.append("$inputLine\n")
+                        inputLine = it.readLine()
+                    }
+                    it.close()
 
-                var inputLine = it.readLine()
-                while (inputLine != null) {
-                    response.append("$inputLine\n")
-                    inputLine = it.readLine()
+                    return@withContext response.toString()
                 }
-                it.close()
-                while(response.isNotBlank()) {
-                    println("$response")
-                    response.delete(0, 4000)
-                }
-                return response.toString()
+            } catch (e: Exception) {
+                println("Error $e")
+            } finally {
+                connection.disconnect()
+                println("Complete")
             }
-        } catch (e: Exception) {
-            println("Error $e")
-        } finally {
-            connection.disconnect()
-            println("Complete")
+            return@withContext "";
         }
-        return "";
     }
 }

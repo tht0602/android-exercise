@@ -4,7 +4,10 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/android_studio_project/CathaybkAndroidExercise/app/src/main/res/layout/activity_main.xml" value="0.22282608695652173" />
+        <entry key="..\:/android_studio_project/CathaybkAndroidExercise/app/src/main/res/layout/activity_search_repositories.xml" value="0.17395833333333333" />
+        <entry key="..\:/android_studio_project/CathaybkAndroidExercise/app/src/main/res/layout/github_userlist_item.xml" value="0.190625" />
         <entry key="..\:/android_studio_project/CathaybkAndroidExercise/app/src/main/res/layout/item_github_list.xml" value="0.19427083333333334" />
+        <entry key="..\:/android_studio_project/CathaybkAndroidExercise/app/src/main/res/layout/repo_view_item.xml" value="0.17395833333333333" />
       </map>
     </option>
   </component>
