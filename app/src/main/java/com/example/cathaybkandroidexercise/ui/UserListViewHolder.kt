@@ -18,9 +18,6 @@ package com.example.cathaybkandroidexercise.ui
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,14 +27,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.cathaybkandroidexercise.R
 import com.example.cathaybkandroidexercise.model.User
-import com.google.android.material.internal.ContextUtils.getActivity
-import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.Dispatchers
-import java.io.IOException
-import java.net.URL
-import com.nostra13.universalimageloader.core.ImageLoader
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration
 
+private const val EXTRA_USERNAME = "username"
 
 /**
  * View Holder for a [User] RecyclerView list item.
@@ -53,24 +44,29 @@ class UserListViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     init {
         context = view.context
         view.setOnClickListener {
-            user?.url?.let { url ->
-                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+
+            //click then go to UserDetailActivity
+            user?.login?.let { login ->
+                val intent = Intent(context, UserDetailActivity::class.java).apply {
+                    putExtra(EXTRA_USERNAME, login)
+                }
                 view.context.startActivity(intent)
             }
         }
     }
 
-    fun bind(uesr: User?) {
-        if (uesr == null) {
-            val resources = itemView.resources
-        } else {
-            showUserData(uesr)
+    fun bind(user: User?) {
+        if (user != null) {
+            showUserData(user)
         }
     }
 
     private fun showUserData(user: User) {
         this.user = user
         texrViewLogin.text = user.login
+        if(!user.siteAdmin){
+            imageViewSiteAdmin.visibility = View.GONE
+        }
 
         this.context?.let {
             Glide
@@ -78,7 +74,7 @@ class UserListViewHolder(view: View) : RecyclerView.ViewHolder(view) {
                 .load(user.avatarUrl)
                 .circleCrop()
                 .into(imageViewAvatar)
-        };
+        }
     }
 
     companion object {

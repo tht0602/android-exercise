@@ -18,7 +18,7 @@ package com.example.cathaybkandroidexercise.data
 
 import com.google.gson.annotations.SerializedName
 
-class GithubListUserData{
+class GithubUserDetailData{
 
     @SerializedName("login")
     val login: String = ""

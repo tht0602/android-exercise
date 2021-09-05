@@ -1,14 +1,10 @@
-package com.example.cathaybkandroidexercise
+package com.example.cathaybkandroidexercise.model
 
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.*
-import java.lang.StringBuilder
 import java.net.HttpURLConnection
 import java.net.URL
-import java.net.URLEncoder
 
 class GithubDataMethod {
 

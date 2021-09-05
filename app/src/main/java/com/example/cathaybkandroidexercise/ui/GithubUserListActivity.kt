@@ -92,7 +92,7 @@ class GithubUserListActivity : AppCompatActivity() {
                     is GithubUserListResult.Error -> {
                         Toast.makeText(
                             this@GithubUserListActivity,
-                            "\uD83D\uDE28 Wooops $result.message}",
+                            "Wooops $result}",
                             Toast.LENGTH_LONG
                         ).show()
                     }
