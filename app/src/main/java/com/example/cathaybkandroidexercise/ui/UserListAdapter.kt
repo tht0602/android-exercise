@@ -35,7 +35,7 @@ class UserListAdapter : ListAdapter<User, UserListViewHolder>(USER_COMPARATOR) {
 
         val userItem = getItem(position)
         if (userItem != null) {
-            holder.bind(userItem)
+            holder.bind(userItem, position)
         }
 
     }

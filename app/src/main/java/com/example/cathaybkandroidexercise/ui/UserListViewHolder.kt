@@ -27,6 +27,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.cathaybkandroidexercise.R
 import com.example.cathaybkandroidexercise.model.User
+import android.widget.Toast
+
+
+
 
 private const val EXTRA_USERNAME = "username"
 
@@ -41,12 +45,14 @@ class UserListViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
     private var user: User? = null
     private var context: Context? = null
+    private var numberOfItem = 0
 
     init {
 
         context = view.context
         view.setOnClickListener {
 
+            Toast.makeText(context, "Number of item: $numberOfItem", Toast.LENGTH_SHORT).show()
             //click then go to UserDetailActivity
             user?.login?.let { login ->
                 val intent = Intent(context, UserDetailActivity::class.java).apply {
@@ -58,9 +64,10 @@ class UserListViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
     }
 
-    fun bind(user: User?) {
+    fun bind(user: User?, numberOfItem: Int) {
         if (user != null) {
             showUserData(user)
+            this.numberOfItem = numberOfItem
         }
     }
 
@@ -89,6 +96,7 @@ class UserListViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.github_userlist_item, parent, false)
             return UserListViewHolder(view)
+
         }
 
     }
