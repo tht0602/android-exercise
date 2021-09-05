@@ -3,7 +3,7 @@ An android exercise with Kotlin for test
 Loads users list on https://api.github.com/ and show on a Recycleview
 
 # license
-Copyright 2011-2015 Sergey Tarasevich
+Copyright 2021 tht0602
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
