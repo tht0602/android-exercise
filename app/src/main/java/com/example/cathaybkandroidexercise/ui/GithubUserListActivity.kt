@@ -46,10 +46,6 @@ class GithubUserListActivity : AppCompatActivity() {
         val viewModel = ViewModelProvider(this, Injection.provideViewModelFactory(owner = this))
             .get(GithubUserListViewModel::class.java)
 
-        // add dividers between RecyclerView's row items
-        val decoration = DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
-        binding.recyclerGithubList.addItemDecoration(decoration)
-
         // bind the state
         binding.bindState(
             userListUiState = viewModel.state,
