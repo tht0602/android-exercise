@@ -10,8 +10,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CathaybkAndroidExercise">
-<!--        <activity-->
-<!--            android:name=".MainActivity"-->
         <activity
             android:name=".ui.GithubUserListActivity"
             android:exported="true">

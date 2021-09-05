@@ -30,6 +30,8 @@ import androidx.recyclerview.widget.RecyclerView.OnScrollListener
 import com.example.cathaybkandroidexercise.Injection
 import com.example.cathaybkandroidexercise.databinding.ActivityMainBinding
 import com.example.cathaybkandroidexercise.model.GithubUserListResult
+import com.nostra13.universalimageloader.core.ImageLoader
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration
 
 
 class GithubUserListActivity : AppCompatActivity() {
@@ -56,7 +58,7 @@ class GithubUserListActivity : AppCompatActivity() {
     }
 
     /**
-     * Binds the [UiState] provided  by the [SearchRepositoriesViewModel] to the UI,
+     * Binds the [userListUiState] provided  by the [GithubUserListViewModel] to the UI,
      * and allows the UI to feed back user actions to it.
      */
     private fun ActivityMainBinding.bindState(
@@ -117,6 +119,6 @@ class GithubUserListActivity : AppCompatActivity() {
                     )
                 )
             }
-        })
+        } )
     }
 }

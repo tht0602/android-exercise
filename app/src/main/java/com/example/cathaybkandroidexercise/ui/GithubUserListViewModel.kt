@@ -24,7 +24,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 /**
- * ViewModel for the [SearchRepositoriesActivity] screen.
+ * ViewModel for the [GithubUserListActivity] screen.
  * The ViewModel works with the [GithubUserList] to get the data.
  */
 class GithubUserListViewModel(
