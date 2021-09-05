@@ -12,7 +12,8 @@
         android:theme="@style/Theme.CathaybkAndroidExercise">
         <activity
             android:name=".ui.GithubUserListActivity"
-            android:exported="true">
+            android:exported="true"
+            android:label="@string/github_user_title">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,7 +22,9 @@
         </activity>
 
         <activity
-            android:name=".ui.UserDetailActivity">
+            android:name=".ui.UserDetailActivity"
+            android:theme="@style/Theme.CathaybkAndroidExercise.NoActionBar"
+            >
         </activity>
     </application>
 

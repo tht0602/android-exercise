@@ -23,6 +23,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
+private const val VISIBLE_THRESHOLD = 1
+private const val DEFAULT_QUERY = "Android"
+
 /**
  * ViewModel for the [GithubUserListActivity] screen.
  * The ViewModel works with the [GithubUserList] to get the data.
@@ -43,63 +46,70 @@ class GithubUserListViewModel(
     val accept: (UserListUiAction) -> Unit
 
     init {
-        val queryLiveData =
-            MutableLiveData(DEFAULT_QUERY)
+
+        val queryLiveData = MutableLiveData(DEFAULT_QUERY)
 
         state = queryLiveData
             .distinctUntilChanged()
             .switchMap { queryString ->
+
                 liveData {
+
                     val uiState = userList.getUserListResultStream(queryString)
                         .map {
+
                             UserListUiState(
                                 query = queryString,
                                 listResult = it
                             )
+
                         }
                         .asLiveData(Dispatchers.Main)
                     emitSource(uiState)
+
                 }
             }
 
         accept = { action ->
             when (action) {
+
                 is UserListUiAction.Search -> queryLiveData.postValue(action.query)
                 is UserListUiAction.Scroll -> if (action.shouldFetchMore) {
+
                     val immutableQuery = queryLiveData.value
                     if (immutableQuery != null) {
+
                         viewModelScope.launch {
                             userList.requestMore(immutableQuery)
                         }
+
                     }
+
                 }
+
             }
+
         }
+
     }
 
-    override fun onCleared() {
-        savedStateHandle[LAST_SEARCH_QUERY] = state.value?.query
-        super.onCleared()
-    }
 }
 
 private val UserListUiAction.Scroll.shouldFetchMore
     get() = visibleItemCount + lastVisibleItemPosition + VISIBLE_THRESHOLD >= totalItemCount
 
 sealed class UserListUiAction {
+
     data class Search(val query: String) : UserListUiAction()
     data class Scroll(
         val visibleItemCount: Int,
         val lastVisibleItemPosition: Int,
         val totalItemCount: Int
     ) : UserListUiAction()
+
 }
 
 data class UserListUiState(
     val query: String,
     val listResult: GithubUserListResult
 )
-
-private const val VISIBLE_THRESHOLD = 5
-private const val LAST_SEARCH_QUERY: String = "last_search_query"
-private const val DEFAULT_QUERY = "Android"

@@ -55,6 +55,7 @@ class GithubUserListActivity : AppCompatActivity() {
             userListUiState = viewModel.state,
             uiActions = viewModel.accept
         )
+
     }
 
     /**
@@ -65,6 +66,7 @@ class GithubUserListActivity : AppCompatActivity() {
         userListUiState: LiveData<UserListUiState>,
         uiActions: (UserListUiAction) -> Unit
     ) {
+
         val userAdapter = UserListAdapter()
         recyclerGithubList.adapter = userAdapter
 
@@ -73,12 +75,14 @@ class GithubUserListActivity : AppCompatActivity() {
             uiState = userListUiState,
             onScrollChanged = uiActions
         )
+
     }
     private fun ActivityMainBinding.bindList(
         userListAdapter: UserListAdapter,
         uiState: LiveData<UserListUiState>,
         onScrollChanged: (UserListUiAction.Scroll) -> Unit
     ) {
+
         setupScrollListener(onScrollChanged)
 
         uiState
@@ -86,9 +90,11 @@ class GithubUserListActivity : AppCompatActivity() {
             .distinctUntilChanged()
             .observe(this@GithubUserListActivity) { result ->
                 when (result) {
+
                     is GithubUserListResult.Success -> {
                         userListAdapter.submitList(result.data)
                     }
+
                     is GithubUserListResult.Error -> {
                         Toast.makeText(
                             this@GithubUserListActivity,
@@ -96,17 +102,23 @@ class GithubUserListActivity : AppCompatActivity() {
                             Toast.LENGTH_LONG
                         ).show()
                     }
+
                 }
+
             }
+
     }
 
     private fun ActivityMainBinding.setupScrollListener(
         onScrollChanged: (UserListUiAction.Scroll) -> Unit
     ) {
+
         val layoutManager = recyclerGithubList.layoutManager as LinearLayoutManager
         recyclerGithubList.addOnScrollListener(object : OnScrollListener() {
+
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
+
                 val totalItemCount = layoutManager.itemCount
                 val visibleItemCount = layoutManager.childCount
                 val lastVisibleItem = layoutManager.findLastVisibleItemPosition()
@@ -118,7 +130,11 @@ class GithubUserListActivity : AppCompatActivity() {
                         totalItemCount = totalItemCount
                     )
                 )
+
             }
+
         } )
+
     }
+
 }

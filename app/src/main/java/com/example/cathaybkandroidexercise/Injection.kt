@@ -29,8 +29,7 @@ import com.example.cathaybkandroidexercise.ui.UserListViewModelFactory
 object Injection {
 
     /**
-     * Creates an instance of [GithubRepository] based on the [GithubService] and a
-     * [GithubLocalCache]
+     * Creates an instance of [GithubUserList] based on the [GithubUserListService]
      */
     private fun provideGithubUserList(): GithubUserList {
         return GithubUserList(GithubUserListService.create())

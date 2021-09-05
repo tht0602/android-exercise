@@ -86,4 +86,5 @@ class UserDetailActivity : AppCompatActivity() {
             .into(imageview_detail_avatar)
 
     }
+
 }

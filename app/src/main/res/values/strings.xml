@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">Cathaybk Android Exercise</string>
     <string name="github_user_title">Github Users</string>
+    <string name="cd_user_avatar">user_avatar</string>
+    <string name="cd_linear_layout">splits login name and admin icon</string>
+    <string name="cd_login_name">loginName</string>
+    <string name="cd_admin_icon">admin icon</string>
+    <string name="user_list_title">Users</string>
 </resources>

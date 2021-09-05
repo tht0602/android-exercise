@@ -14,12 +14,11 @@
  * limitations under the License.
  */
 
-package com.example.cathaybkandroidexercise.data;
-
+package com.example.cathaybkandroidexercise.data
 
 // GitHub page API is 1 based: https://developer.github.com/v3/#pagination
 
-import com.example.cathaybkandroidexercise.api.GithubUserListService;
+import com.example.cathaybkandroidexercise.api.GithubUserListService
 import com.example.cathaybkandroidexercise.model.GithubUserListResult
 import com.example.cathaybkandroidexercise.model.User
 import kotlinx.coroutines.flow.Flow

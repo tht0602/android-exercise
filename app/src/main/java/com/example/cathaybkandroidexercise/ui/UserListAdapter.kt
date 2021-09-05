@@ -32,19 +32,24 @@ class UserListAdapter : ListAdapter<User, UserListViewHolder>(USER_COMPARATOR) {
     }
 
     override fun onBindViewHolder(holder: UserListViewHolder, position: Int) {
+
         val userItem = getItem(position)
         if (userItem != null) {
             holder.bind(userItem)
         }
+
     }
 
     companion object {
         private val USER_COMPARATOR = object : DiffUtil.ItemCallback<User>() {
+
             override fun areItemsTheSame(oldItem: User, newItem: User): Boolean =
                 oldItem.id == newItem.id
 
             override fun areContentsTheSame(oldItem: User, newItem: User): Boolean =
                 oldItem == newItem
         }
+
     }
+
 }

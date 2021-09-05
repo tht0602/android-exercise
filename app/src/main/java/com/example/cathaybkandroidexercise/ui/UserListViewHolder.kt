@@ -34,6 +34,7 @@ private const val EXTRA_USERNAME = "username"
  * View Holder for a [User] RecyclerView list item.
  */
 class UserListViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+
     private val texrViewLogin: TextView = view.findViewById(R.id.textview_login)
     private val imageViewAvatar: ImageView = view.findViewById(R.id.imageview_avatar)
     private val imageViewSiteAdmin: ImageView = view.findViewById(R.id.site_admin)
@@ -42,6 +43,7 @@ class UserListViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     private var context: Context? = null
 
     init {
+
         context = view.context
         view.setOnClickListener {
 
@@ -53,6 +55,7 @@ class UserListViewHolder(view: View) : RecyclerView.ViewHolder(view) {
                 view.context.startActivity(intent)
             }
         }
+
     }
 
     fun bind(user: User?) {
@@ -62,6 +65,7 @@ class UserListViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     }
 
     private fun showUserData(user: User) {
+
         this.user = user
         texrViewLogin.text = user.login
         if(!user.siteAdmin){
@@ -75,14 +79,18 @@ class UserListViewHolder(view: View) : RecyclerView.ViewHolder(view) {
                 .circleCrop()
                 .into(imageViewAvatar)
         }
+
     }
 
     companion object {
+
         fun create(parent: ViewGroup): UserListViewHolder {
 
             val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.github_userlist_item, parent, false)
             return UserListViewHolder(view)
         }
+
     }
+
 }

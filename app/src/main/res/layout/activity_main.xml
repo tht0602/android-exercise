@@ -30,7 +30,8 @@
         android:layout_height="50sp"
         android:gravity="start|center_vertical"
         android:paddingStart="25sp"
-        android:text="Users"
+        android:paddingEnd="0sp"
+        android:text="@string/user_list_title"
         android:textColor="@color/gray"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -49,4 +50,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/user_text" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
