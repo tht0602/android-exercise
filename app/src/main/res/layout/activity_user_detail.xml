@@ -36,13 +36,14 @@
     <ImageView
         android:id="@+id/imageview_detail_avatar"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="150dp"
         android:contentDescription="@string/cd_user_avatar" />
 
     <TextView
         android:id="@+id/textview_detail_username"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
         android:gravity="center"
         android:textSize="25sp" />
 
@@ -50,6 +51,7 @@
         android:id="@+id/textview_detail_bio"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
         android:gravity="center"
         android:textSize="20sp" />
 
@@ -57,7 +59,8 @@
         android:id="@+id/textview_detail_border"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/gray" />
+        android:layout_marginTop="15dp"
+        android:background="@color/light_gray" />
 
     <LinearLayout
         android:layout_width="match_parent"
