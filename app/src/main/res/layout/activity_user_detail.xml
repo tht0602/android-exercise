@@ -29,20 +29,21 @@
         android:layout_height="100dp"
         android:padding="35dp"
         android:scaleType="fitStart"
-        app:srcCompat="@drawable/button_close"
-        tools:layout_editor_absoluteX="10dp" />
+        app:srcCompat="@mipmap/ic_close"
+        tools:layout_editor_absoluteX="10dp"
+        android:contentDescription="@string/cd_close_icon" />
 
     <ImageView
         android:id="@+id/imageview_detail_avatar"
         android:layout_width="match_parent"
-        android:layout_height="200dp" />
+        android:layout_height="200dp"
+        android:contentDescription="@string/cd_user_avatar" />
 
     <TextView
         android:id="@+id/textview_detail_username"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="UserName"
         android:textSize="25sp" />
 
     <TextView
@@ -50,14 +51,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Bio"
         android:textSize="20sp" />
 
     <TextView
         android:id="@+id/textview_detail_border"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@drawable/border" />
+        android:background="@color/gray" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -69,8 +69,9 @@
             android:id="@+id/textview_detail_login_icon"
             android:layout_width="80dp"
             android:layout_height="match_parent"
-            android:src="@drawable/icon_login"
-            android:padding="30dp"/>
+            android:contentDescription="@string/cd_login_name"
+            android:padding="27dp"
+            android:src="@mipmap/ic_login" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -89,7 +90,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="25dp"
                 android:layout_marginTop="5dp"
-                android:contentDescription="admin icon"
+                android:contentDescription="@string/cd_admin_icon"
                 android:scaleType="fitStart"
                 android:visibility="gone"
                 app:srcCompat="@drawable/icon_staff" />
@@ -101,14 +102,16 @@
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:orientation="horizontal"
-        android:gravity="start|center_vertical" >
+        android:gravity="start|center_vertical"
+        android:contentDescription="@string/cd_linear_layout" >
 
         <ImageView
             android:id="@+id/textview_detail_location_icon"
             android:layout_width="80dp"
             android:layout_height="match_parent"
-            android:src="@drawable/icon_location"
-            android:padding="30dp"/>
+            android:contentDescription="@string/cd_location"
+            android:padding="27dp"
+            android:src="@mipmap/ic_location" />
 
         <TextView
             android:id="@+id/textview_detail_location"
@@ -129,9 +132,9 @@
             android:id="@+id/textview_detail_link_icon"
             android:layout_width="80dp"
             android:layout_height="match_parent"
-            android:src="@drawable/icon_link"
-            android:padding="30dp"
-            android:contentDescription="TODO" />
+            android:contentDescription="@string/cd_link"
+            android:padding="27dp"
+            android:src="@mipmap/ic_link" />
 
         <TextView
             android:id="@+id/textview_detail_link"

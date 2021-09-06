@@ -5,5 +5,8 @@
     <string name="cd_linear_layout">splits login name and admin icon</string>
     <string name="cd_login_name">loginName</string>
     <string name="cd_admin_icon">admin icon</string>
+    <string name="cd_location">location</string>
+    <string name="cd_close_icon">close icon</string>
+    <string name="cd_link">blog link</string>
     <string name="user_list_title">Users</string>
 </resources>
