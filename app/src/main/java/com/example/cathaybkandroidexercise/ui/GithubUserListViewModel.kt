@@ -55,7 +55,7 @@ class GithubUserListViewModel(
 
                 liveData {
 
-                    val uiState = userList.getUserListResultStream(queryString)
+                    val uiState = userList.getUserListResultStream()
                         .map {
 
                             UserListUiState(
@@ -80,7 +80,7 @@ class GithubUserListViewModel(
                     if (immutableQuery != null) {
 
                         viewModelScope.launch {
-                            userList.requestMore(immutableQuery)
+                            userList.requestMore()
                         }
 
                     }

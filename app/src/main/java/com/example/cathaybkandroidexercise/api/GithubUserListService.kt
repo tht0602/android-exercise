@@ -23,6 +23,7 @@ import okhttp3.logging.HttpLoggingInterceptor.Level
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 /**
@@ -40,10 +41,20 @@ interface GithubUserListService {
         @Query("per_page") PerPage: Int
     ): List<User>
 
+    /**
+     * Get UserList ordered by stars.
+     */
+    @GET("users/{username}")
+    suspend fun searchUserDetail(
+        @Path("username") username: String,
+    ): User
+
     companion object {
+
         private const val BASE_URL = "https://api.github.com/"
 
         fun create(): GithubUserListService {
+
             println("GithubUserListService create()")
             val logger = HttpLoggingInterceptor()
             logger.level = Level.BASIC
@@ -57,6 +68,7 @@ interface GithubUserListService {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
                 .create(GithubUserListService::class.java)
+
         }
     }
 }

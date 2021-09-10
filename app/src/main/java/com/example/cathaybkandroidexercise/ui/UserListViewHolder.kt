@@ -39,17 +39,16 @@ private const val EXTRA_USERNAME = "username"
  */
 class UserListViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-    private val texrViewLogin: TextView = view.findViewById(R.id.textview_login)
+    private val textViewLogin: TextView = view.findViewById(R.id.textview_login)
     private val imageViewAvatar: ImageView = view.findViewById(R.id.imageview_avatar)
     private val imageViewSiteAdmin: ImageView = view.findViewById(R.id.site_admin)
 
     private var user: User? = null
-    private var context: Context? = null
+    private val context: Context = view.context
     private var numberOfItem = 0
 
     init {
 
-        context = view.context
         view.setOnClickListener {
 
             Toast.makeText(context, "Number of item: $numberOfItem", Toast.LENGTH_SHORT).show()
@@ -74,18 +73,15 @@ class UserListViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     private fun showUserData(user: User) {
 
         this.user = user
-        texrViewLogin.text = user.login
+        textViewLogin.text = user.login
         if(!user.siteAdmin){
             imageViewSiteAdmin.visibility = View.GONE
         }
 
-        this.context?.let {
-            Glide
-                .with(it)
-                .load(user.avatarUrl)
-                .circleCrop()
-                .into(imageViewAvatar)
-        }
+        Glide.with(context)
+            .load(user.avatarUrl)
+            .circleCrop()
+            .into(imageViewAvatar)
 
     }
 

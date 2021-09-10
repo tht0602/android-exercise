@@ -57,34 +57,34 @@ class GithubUserList(private val serviceUserList: GithubUserListService) {
      * Search repositories whose names match the query, exposed as a stream of data that will emit
      * every time we get more data from the network.
      */
-    suspend fun getUserListResultStream(query: String): Flow<GithubUserListResult> {
-        println("New query: $query")
+    suspend fun getUserListResultStream(): Flow<GithubUserListResult> {
         lastSinceID = GITHUB_STARTING_ID
         totalUsersCount = 0
         inMemoryCache.clear()
-        requestAndSaveData(query)
+        requestAndSaveData()
 
         return searchResults
     }
 
-    suspend fun requestMore(query: String) {
+    suspend fun requestMore() {
         if (totalUsersCount >= TOTAL_USERS_LIMIT) return
         if (isRequestInProgress) return
 
-        requestAndSaveData(query)
+        requestAndSaveData()
     }
 
-    suspend fun retry(query: String) {
+    suspend fun retry() {
         if (isRequestInProgress) return
 
-        requestAndSaveData(query)
+        requestAndSaveData()
     }
 
-    private suspend fun requestAndSaveData(query: String): Boolean {
+    private suspend fun requestAndSaveData(): Boolean {
         isRequestInProgress = true
         var successful = false
 
         try {
+
             val response = serviceUserList.searchUsers(lastSinceID, PER_PAGE_SIZE)
             println("response $response")
             inMemoryCache.addAll(response)
@@ -95,6 +95,7 @@ class GithubUserList(private val serviceUserList: GithubUserListService) {
             successful = true
             lastSinceID = reposByName.last().id
             totalUsersCount = reposByName.size
+
         } catch (exception: IOException) {
             searchResults.emit(GithubUserListResult.Error(exception))
         } catch (exception: HttpException) {

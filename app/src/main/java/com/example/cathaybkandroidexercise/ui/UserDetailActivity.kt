@@ -16,75 +16,61 @@
 
 package com.example.cathaybkandroidexercise.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import androidx.lifecycle.lifecycleScope
+import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
-import com.example.cathaybkandroidexercise.model.GithubDataMethod
 import com.example.cathaybkandroidexercise.R
-import kotlinx.coroutines.launch
+import com.example.cathaybkandroidexercise.model.User
 import kotlinx.android.synthetic.main.activity_user_detail.*
-import org.json.JSONObject
 
 private const val EXTRA_USERNAME = "username"
 
-private const val DEFAULT_USER = "mojombo"
+class UserDetailActivity : AppCompatActivity(), UserDetailContract.View {
 
-class UserDetailActivity : AppCompatActivity() {
+    private lateinit var presenter: UserDetailContract.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_detail)
 
-        //get {username} from GithubUserListActivity or use DEFAULT_USER
-        var queryUserName = DEFAULT_USER
-        this.intent.getStringExtra(EXTRA_USERNAME)?.let { username ->
-            queryUserName = username
-        }
+        val queryUserName = this.intent.getStringExtra(EXTRA_USERNAME)
 
         imageview_detail_x.setOnClickListener {
             this.finish()
         }
 
-        val githubDataMethod = GithubDataMethod()
-
-        lifecycleScope.launch {
-
-            val usersListJsonStr:String = githubDataMethod.sendGetUser(queryUserName)
-
-            println(usersListJsonStr)
-
-            githubListJsonParse(usersListJsonStr)
-
+        queryUserName?.let {
+            setPresenter(UserDetailActivityPresenter(this, lifecycle, it))
         }
 
     }
 
-    private fun githubListJsonParse(jsonStr: String){
+    override fun onResume() {
+        super.onResume()
+        presenter.start()
+    }
 
-        val githubUserDetail = JSONObject(jsonStr)
+    override fun setPresenter(presenter: UserDetailContract.Presenter) {
+        this.presenter = presenter
+    }
 
-        textview_detail_username.text = githubUserDetail.getString("name")
+    override fun showDetail(user: User) {
 
-        textview_detail_bio.text = githubUserDetail.getString("bio")
-
-        textview_detail_login.text = githubUserDetail.getString("login")
-
-        if(githubUserDetail.getBoolean("site_admin")) {
+        textview_detail_username.text = user.name
+        textview_detail_bio.text = user.bio
+        textview_detail_login.text = user.login
+        if(user.siteAdmin) {
             textview_detail_admin.visibility = View.VISIBLE
         }
-
-        textview_detail_location.text = githubUserDetail.getString("location")
-
-        textview_detail_link.text = githubUserDetail.getString("blog")
+        textview_detail_location.text = user.location
+        textview_detail_link.text = user.blog
 
         Glide
             .with(this)
-            .load(githubUserDetail.get("avatar_url"))
+            .load(user.avatarUrl)
             .circleCrop()
             .into(imageview_detail_avatar)
-
     }
 
 }
