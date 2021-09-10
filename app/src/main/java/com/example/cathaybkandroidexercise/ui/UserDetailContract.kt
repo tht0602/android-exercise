@@ -7,7 +7,8 @@ import com.example.cathaybkandroidexercise.model.User
 interface UserDetailContract {
 
     interface View: BaseView<Presenter> {
-        fun showDetail(user: User)
+        fun onLoadedDetail(user: User)
+        fun onLoadedDetailError(message: String)
     }
 
     interface Presenter:BasePresenter{

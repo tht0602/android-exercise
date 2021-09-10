@@ -4,6 +4,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.coroutineScope
 import com.example.cathaybkandroidexercise.api.GithubUserListService
 import kotlinx.coroutines.launch
+import okio.IOException
 
 class UserDetailActivityPresenter(
     val view: UserDetailContract.View,
@@ -20,11 +21,20 @@ class UserDetailActivityPresenter(
 
             val githubUserListService = GithubUserListService.create()
 
-            val user = githubUserListService.searchUserDetail(queryUserName)
+            try {
 
-            println("response $user")
+                val user = githubUserListService.searchUserDetail(queryUserName)
+                println("response $user")
+                view.onLoadedDetail(user)
 
-            view.showDetail(user)
+            }catch (e: Exception){
+
+                println("Error: $e")
+                e.message?.let{
+                    view.onLoadedDetailError(it)
+                }
+
+            }
 
         }
     }

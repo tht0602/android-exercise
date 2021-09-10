@@ -18,6 +18,7 @@ package com.example.cathaybkandroidexercise.ui
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.example.cathaybkandroidexercise.R
@@ -55,7 +56,7 @@ class UserDetailActivity : AppCompatActivity(), UserDetailContract.View {
         this.presenter = presenter
     }
 
-    override fun showDetail(user: User) {
+    override fun onLoadedDetail(user: User) {
 
         textview_detail_username.text = user.name
         textview_detail_bio.text = user.bio
@@ -71,6 +72,13 @@ class UserDetailActivity : AppCompatActivity(), UserDetailContract.View {
             .load(user.avatarUrl)
             .circleCrop()
             .into(imageview_detail_avatar)
+
+    }
+
+    override fun onLoadedDetailError(message: String) {
+
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+
     }
 
 }
