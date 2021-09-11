@@ -16,9 +16,8 @@
 
 package com.example.cathaybkandroidexercise.model
 
-import java.lang.Exception
-
-sealed class GithubUserListResult {
-    data class Success(val data: List<User>) : GithubUserListResult()
-    data class Error(val error: Exception) : GithubUserListResult()
+sealed class UserListDataResult {
+    data class Success(val data: List<User>) : UserListDataResult()
+    data class Error(val errorMessage: String) : UserListDataResult()
+    data class Info(val info: String) : UserListDataResult()
 }

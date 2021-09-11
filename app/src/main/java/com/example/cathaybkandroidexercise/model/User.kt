@@ -23,5 +23,8 @@ data class User(
     @field:SerializedName("id") val id: Int,
     @field:SerializedName("avatar_url") val avatarUrl: String,
     @field:SerializedName("site_admin") val siteAdmin: Boolean,
-    @field:SerializedName("url") val url: String
+    @field:SerializedName("bio") val bio: String,
+    @field:SerializedName("location") val location: String,
+    @field:SerializedName("blog") val blog: String,
+    @field:SerializedName("name") val name: String,
 )

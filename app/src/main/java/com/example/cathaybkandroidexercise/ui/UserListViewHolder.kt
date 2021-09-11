@@ -18,9 +18,7 @@ package com.example.cathaybkandroidexercise.ui
 
 import android.content.Context
 import android.content.Intent
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -28,76 +26,52 @@ import com.bumptech.glide.Glide
 import com.example.cathaybkandroidexercise.R
 import com.example.cathaybkandroidexercise.model.User
 import android.widget.Toast
+import com.example.cathaybkandroidexercise.EXTRA_USERNAME
 
-
-
-
-private const val EXTRA_USERNAME = "username"
 
 /**
  * View Holder for a [User] RecyclerView list item.
  */
-class UserListViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+class UserListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), UserListContract.UserItemView {
 
-    private val texrViewLogin: TextView = view.findViewById(R.id.textview_login)
-    private val imageViewAvatar: ImageView = view.findViewById(R.id.imageview_avatar)
-    private val imageViewSiteAdmin: ImageView = view.findViewById(R.id.site_admin)
+    private val textViewLogin: TextView = itemView.findViewById(R.id.textview_login)
+    private val imageViewAvatar: ImageView = itemView.findViewById(R.id.imageview_avatar)
+    private val imageViewSiteAdmin: ImageView = itemView.findViewById(R.id.site_admin)
 
-    private var user: User? = null
-    private var context: Context? = null
-    private var numberOfItem = 0
+    private lateinit var user: User
+    private val context: Context = itemView.context
+    private var numberOfItems = 0
 
     init {
 
-        context = view.context
-        view.setOnClickListener {
+        itemView.setOnClickListener {
 
-            Toast.makeText(context, "Number of item: $numberOfItem", Toast.LENGTH_SHORT).show()
-            //click then go to UserDetailActivity
-            user?.login?.let { login ->
-                val intent = Intent(context, UserDetailActivity::class.java).apply {
-                    putExtra(EXTRA_USERNAME, login)
-                }
-                view.context.startActivity(intent)
+            Toast.makeText(context, "Number of item: $numberOfItems", Toast.LENGTH_SHORT).show()
+
+            val intent = Intent(context, UserDetailActivity::class.java).apply {
+                putExtra(EXTRA_USERNAME, user.login)
             }
+            itemView.context.startActivity(intent)
+
         }
 
     }
 
-    fun bind(user: User?, numberOfItem: Int) {
-        if (user != null) {
-            showUserData(user)
-            this.numberOfItem = numberOfItem
-        }
-    }
+    override fun bindData(user: User, numberOfItems: Int) {
 
-    private fun showUserData(user: User) {
-
+        this.numberOfItems = numberOfItems
         this.user = user
-        texrViewLogin.text = user.login
-        if(!user.siteAdmin){
+        textViewLogin.text = user.login
+        if(user.siteAdmin){
+            imageViewSiteAdmin.visibility = View.VISIBLE
+        }else{
             imageViewSiteAdmin.visibility = View.GONE
         }
 
-        this.context?.let {
-            Glide
-                .with(it)
-                .load(user.avatarUrl)
-                .circleCrop()
-                .into(imageViewAvatar)
-        }
-
-    }
-
-    companion object {
-
-        fun create(parent: ViewGroup): UserListViewHolder {
-
-            val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.github_userlist_item, parent, false)
-            return UserListViewHolder(view)
-
-        }
+        Glide.with(context)
+            .load(user.avatarUrl)
+            .circleCrop()
+            .into(imageViewAvatar)
 
     }
 

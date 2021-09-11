@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CathaybkAndroidExercise">
         <activity
-            android:name=".ui.GithubUserListActivity"
+            android:name=".ui.UserListActivity"
             android:exported="true"
             android:label="@string/github_user_title">
             <intent-filter>
