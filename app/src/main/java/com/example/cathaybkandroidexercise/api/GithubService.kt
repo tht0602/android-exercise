@@ -30,7 +30,7 @@ import retrofit2.http.Query
  * Github API communication setup via Retrofit.
  */
 
-interface GithubUserListService {
+interface GithubService {
 
     /**
      * Get UserList ordered by stars.
@@ -53,7 +53,7 @@ interface GithubUserListService {
 
         private const val BASE_URL = "https://api.github.com/"
 
-        fun create(): GithubUserListService {
+        fun create(): GithubService {
 
             println("GithubUserListService create()")
             val logger = HttpLoggingInterceptor()
@@ -67,7 +67,7 @@ interface GithubUserListService {
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
-                .create(GithubUserListService::class.java)
+                .create(GithubService::class.java)
 
         }
     }

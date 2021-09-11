@@ -20,12 +20,14 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
+import com.example.cathaybkandroidexercise.EXTRA_USERNAME
 import com.example.cathaybkandroidexercise.R
 import com.example.cathaybkandroidexercise.model.User
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_user_detail.*
-
-private const val EXTRA_USERNAME = "username"
+import kotlinx.coroutines.launch
 
 class UserDetailActivity : AppCompatActivity(), UserDetailContract.View {
 
@@ -41,15 +43,12 @@ class UserDetailActivity : AppCompatActivity(), UserDetailContract.View {
             this.finish()
         }
 
-        queryUserName?.let {
-            setPresenter(UserDetailActivityPresenter(this, lifecycle, it))
+        setPresenter(UserDetailPresenter(this))
+
+        lifecycleScope.launch{
+            queryUserName?.let { presenter.loadDetail(it) }
         }
 
-    }
-
-    override fun onResume() {
-        super.onResume()
-        presenter.start()
     }
 
     override fun setPresenter(presenter: UserDetailContract.Presenter) {
@@ -58,20 +57,26 @@ class UserDetailActivity : AppCompatActivity(), UserDetailContract.View {
 
     override fun onLoadedDetail(user: User) {
 
-        textview_detail_username.text = user.name
-        textview_detail_bio.text = user.bio
-        textview_detail_login.text = user.login
-        if(user.siteAdmin) {
-            textview_detail_admin.visibility = View.VISIBLE
-        }
-        textview_detail_location.text = user.location
-        textview_detail_link.text = user.blog
+        //Show all the details on view
+        with(user){
 
-        Glide
-            .with(this)
-            .load(user.avatarUrl)
-            .circleCrop()
-            .into(imageview_detail_avatar)
+            textview_detail_username.text = name
+            textview_detail_bio.text = bio
+            textview_detail_login.text = login
+            if(siteAdmin) {
+                textview_detail_admin.visibility = View.VISIBLE
+            }
+            textview_detail_location.text = location
+            textview_detail_link.text = blog
+
+            Glide
+                .with(this@UserDetailActivity)
+                .load(avatarUrl)
+                .circleCrop()
+                .into(imageview_detail_avatar)
+
+        }
+
 
     }
 

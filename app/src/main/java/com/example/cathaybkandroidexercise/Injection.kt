@@ -15,11 +15,8 @@
  */
 
 package com.example.cathaybkandroidexercise
-import androidx.lifecycle.ViewModelProvider
-import androidx.savedstate.SavedStateRegistryOwner
-import com.example.cathaybkandroidexercise.api.GithubUserListService
+import com.example.cathaybkandroidexercise.api.GithubService
 import com.example.cathaybkandroidexercise.data.GithubUserList
-import com.example.cathaybkandroidexercise.ui.UserListViewModelFactory
 
 /**
  * Class that handles object creation.
@@ -29,18 +26,10 @@ import com.example.cathaybkandroidexercise.ui.UserListViewModelFactory
 object Injection {
 
     /**
-     * Creates an instance of [GithubUserList] based on the [GithubUserListService]
+     * Creates an instance of [GithubUserList] based on the [GithubService]
      */
-    private fun provideGithubUserList(): GithubUserList {
-        return GithubUserList(GithubUserListService.create())
-    }
-
-    /**
-     * Provides the [ViewModelProvider.Factory] that is then used to get a reference to
-     * [ViewModel] objects.
-     */
-    fun provideViewModelFactory(owner: SavedStateRegistryOwner): ViewModelProvider.Factory {
-        return UserListViewModelFactory(owner, provideGithubUserList())
+    fun provideGithubUserList(): GithubUserList {
+        return GithubUserList(GithubService.create())
     }
 
 }

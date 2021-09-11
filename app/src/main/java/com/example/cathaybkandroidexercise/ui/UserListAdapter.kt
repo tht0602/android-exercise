@@ -16,40 +16,27 @@
 
 package com.example.cathaybkandroidexercise.ui
 
+import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
-import com.example.cathaybkandroidexercise.model.User
+import androidx.recyclerview.widget.RecyclerView
+import com.example.cathaybkandroidexercise.R
 
 
 /**
  * Adapter for the list of User.
  */
-class UserListAdapter : ListAdapter<User, UserListViewHolder>(USER_COMPARATOR) {
+class UserListAdapter(private val presenter: UserListContract.Presenter) : RecyclerView.Adapter<UserListViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserListViewHolder {
-        return UserListViewHolder.create(parent)
+        return UserListViewHolder(LayoutInflater.from(parent.context)
+            .inflate(R.layout.github_userlist_item, parent, false))
     }
 
     override fun onBindViewHolder(holder: UserListViewHolder, position: Int) {
-
-        val userItem = getItem(position)
-        if (userItem != null) {
-            holder.bind(userItem, position)
-        }
+        presenter.onBindViewHolder(holder, position)
 
     }
 
-    companion object {
-        private val USER_COMPARATOR = object : DiffUtil.ItemCallback<User>() {
-
-            override fun areItemsTheSame(oldItem: User, newItem: User): Boolean =
-                oldItem.id == newItem.id
-
-            override fun areContentsTheSame(oldItem: User, newItem: User): Boolean =
-                oldItem == newItem
-        }
-
-    }
+    override fun getItemCount(): Int = presenter.getUserListCount()
 
 }

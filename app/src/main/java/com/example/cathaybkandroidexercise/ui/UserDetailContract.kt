@@ -12,7 +12,7 @@ interface UserDetailContract {
     }
 
     interface Presenter:BasePresenter{
-        fun loadDetail()
+        suspend fun loadDetail(pathUserName: String)
     }
 
 }

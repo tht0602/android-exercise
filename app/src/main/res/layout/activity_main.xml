@@ -40,7 +40,7 @@
         app:layout_constraintTop_toTopOf="parent"/>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerGithubList"
+        android:id="@+id/recycler_github_list"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="#FFFFFF"
