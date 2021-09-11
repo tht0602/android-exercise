@@ -32,13 +32,13 @@ import kotlinx.coroutines.launch
 class UserListActivity : AppCompatActivity(), UserListContract.View {
 
     private lateinit var presenter: UserListContract.Presenter
-    private lateinit var userListAdapter: UserListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         setPresenter(UserListPresenter(this))
+        presenter.start()
 
         recycler_github_list.addOnScrollListener(
             object : RecyclerView.OnScrollListener() {
@@ -62,7 +62,7 @@ class UserListActivity : AppCompatActivity(), UserListContract.View {
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    override fun onListAdded(userList: List<User>) {
+    override fun onLoadedMoreList(userList: List<User>) {
         recycler_github_list.adapter?.notifyDataSetChanged()
     }
 

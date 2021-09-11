@@ -25,7 +25,7 @@ interface UserListContract {
     interface View: BaseView<Presenter> {
         fun onLoadedList(userList: List<User>)
         fun onLoadedListError(message: String)
-        fun onListAdded(userList: List<User>)
+        fun onLoadedMoreList(userList: List<User>)
         fun onScrolledToBottom()
     }
 

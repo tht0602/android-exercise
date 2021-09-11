@@ -37,7 +37,6 @@ class UserListPresenter (
     }
 
     override fun onScrolled(pastVisibleItems: Int, visibleItemCount: Int, totalItemCount: Int) {
-        println("pastVisibleItems= $pastVisibleItems  visibleItemCount= $visibleItemCount  totalItemCount= $totalItemCount")
         if (pastVisibleItems + visibleItemCount + VISIBLE_THRESHOLD >= totalItemCount) {
             view.onScrolledToBottom()
         }
@@ -56,12 +55,10 @@ class UserListPresenter (
     }
 
     override fun start() {
-
+        githubUserList = Injection.provideGithubUserList()
     }
 
     override suspend fun reloadUserList() {
-
-        githubUserList = Injection.provideGithubUserList()
 
         val result = githubUserList.getUserListResultStream()
         println("response $result")
@@ -80,7 +77,7 @@ class UserListPresenter (
                 if(result.data.size <= PER_PAGE_SIZE) {
                     view.onLoadedList(userList)
                 }else{
-                    view.onListAdded(userList)
+                    view.onLoadedMoreList(userList)
                 }
             }
 
@@ -89,7 +86,7 @@ class UserListPresenter (
             }
 
             is UserListDataResult.Info -> {
-                println("$result")
+                //println("$result")
             }
 
         }
