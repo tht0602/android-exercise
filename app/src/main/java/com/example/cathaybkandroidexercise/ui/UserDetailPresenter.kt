@@ -2,9 +2,9 @@ package com.example.cathaybkandroidexercise.ui
 
 import com.example.cathaybkandroidexercise.api.GithubService
 
-class UserDetailPresenter(
-    private var view: UserDetailContract.View?)
-    : UserDetailContract.Presenter{
+class UserDetailPresenter(): UserDetailContract.Presenter{
+
+    private var view: UserDetailContract.View? = null
 
     override suspend fun loadDetail(pathUserName: String) {
 
@@ -27,8 +27,13 @@ class UserDetailPresenter(
 
     }
 
-    override fun start() {
+    override fun attach(view: UserDetailContract.View) {
+        this.view= view
 
+    }
+
+    override fun detach() {
+        view = null
     }
 
 }

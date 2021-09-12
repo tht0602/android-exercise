@@ -13,6 +13,7 @@ interface UserDetailContract {
 
     interface Presenter:BasePresenter{
         suspend fun loadDetail(pathUserName: String)
+        fun attach(view: View)
     }
 
 }

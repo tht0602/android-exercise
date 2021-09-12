@@ -43,7 +43,7 @@ class UserDetailActivity : AppCompatActivity(), UserDetailContract.View {
             this.finish()
         }
 
-        setPresenter(UserDetailPresenter(this))
+        setPresenter(UserDetailPresenter())
 
         lifecycleScope.launch{
             queryUserName?.let { presenter.loadDetail(it) }
@@ -51,8 +51,14 @@ class UserDetailActivity : AppCompatActivity(), UserDetailContract.View {
 
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.detach()
+    }
+
     override fun setPresenter(presenter: UserDetailContract.Presenter) {
         this.presenter = presenter
+        presenter.attach(this)
     }
 
     override fun onLoadedDetail(user: User) {
