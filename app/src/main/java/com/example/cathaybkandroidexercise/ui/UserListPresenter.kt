@@ -24,11 +24,22 @@ import com.example.cathaybkandroidexercise.model.User
 import com.example.cathaybkandroidexercise.model.UserListDataResult
 
 class UserListPresenter (
-    val view: UserListContract.View)
+    )
     : UserListContract.Presenter {
 
     private lateinit var githubUserList: GithubUserList
+    private var view: UserListContract.View? = null
     private var userList: List<User>? = null
+
+
+    override fun attach(view: UserListContract.View) {
+        this.view = view
+        githubUserList = Injection.provideGithubUserList()
+    }
+
+    override fun detach() {
+        view = null
+    }
 
     override suspend fun loadMoreUserList() {
         val result = githubUserList.requestMore()
@@ -38,7 +49,7 @@ class UserListPresenter (
 
     override fun onScrolled(pastVisibleItems: Int, visibleItemCount: Int, totalItemCount: Int) {
         if (pastVisibleItems + visibleItemCount + VISIBLE_THRESHOLD >= totalItemCount) {
-            view.onScrolledToBottom()
+            view?.onScrolledToBottom()
         }
     }
 
@@ -53,11 +64,6 @@ class UserListPresenter (
             userItemView.bindData(user, position)
         }
     }
-
-    override fun start() {
-        githubUserList = Injection.provideGithubUserList()
-    }
-
     override suspend fun reloadUserList() {
 
         val result = githubUserList.getUserListResultStream()
@@ -75,14 +81,14 @@ class UserListPresenter (
                 val userList = result.data
                 this.userList = userList
                 if(result.data.size <= PER_PAGE_SIZE) {
-                    view.onLoadedList(userList)
+                    view?.onLoadedList(userList)
                 }else{
-                    view.onLoadedMoreList(userList)
+                    view?.onLoadedMoreList(userList)
                 }
             }
 
             is UserListDataResult.Error -> {
-                view.onLoadedListError(result.errorMessage)
+                view?.onLoadedListError(result.errorMessage)
             }
 
             is UserListDataResult.Info -> {

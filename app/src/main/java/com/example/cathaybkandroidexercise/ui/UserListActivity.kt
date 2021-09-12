@@ -37,8 +37,7 @@ class UserListActivity : AppCompatActivity(), UserListContract.View {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        setPresenter(UserListPresenter(this))
-        presenter.start()
+        setPresenter(UserListPresenter())
 
         recycler_github_list.addOnScrollListener(
             object : RecyclerView.OnScrollListener() {
@@ -54,6 +53,11 @@ class UserListActivity : AppCompatActivity(), UserListContract.View {
         lifecycleScope.launch{
             presenter.reloadUserList()
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.detach()
     }
 
     override fun onLoadedList(userList: List<User>) {
@@ -78,6 +82,7 @@ class UserListActivity : AppCompatActivity(), UserListContract.View {
 
     override fun setPresenter(presenter: UserListContract.Presenter) {
         this.presenter = presenter
+        presenter.attach(this)
     }
 
 

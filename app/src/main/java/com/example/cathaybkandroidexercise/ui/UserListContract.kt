@@ -35,6 +35,7 @@ interface UserListContract {
         fun onScrolled(pastVisibleItems: Int, visibleItemCount: Int, totalItemCount: Int)
         fun getUserListCount(): Int
         fun onBindViewHolder(userItemView: UserItemView, position: Int)
+        fun attach(view: View)
     }
 
     interface UserItemView {
