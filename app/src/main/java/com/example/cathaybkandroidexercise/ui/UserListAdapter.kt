@@ -28,11 +28,14 @@ import com.example.cathaybkandroidexercise.R
 class UserListAdapter(private val presenter: UserListContract.Presenter) : RecyclerView.Adapter<UserListViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserListViewHolder {
+
         return UserListViewHolder(LayoutInflater.from(parent.context)
             .inflate(R.layout.github_userlist_item, parent, false))
+
     }
 
     override fun onBindViewHolder(holder: UserListViewHolder, position: Int) {
+
         presenter.onBindViewHolder(holder, position)
 
     }

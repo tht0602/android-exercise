@@ -28,12 +28,15 @@ class UserDetailPresenter(): UserDetailContract.Presenter{
     }
 
     override fun attach(view: UserDetailContract.View) {
+
         this.view= view
 
     }
 
     override fun detach() {
+
         view = null
+
     }
 
 }

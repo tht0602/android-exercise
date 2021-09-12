@@ -40,25 +40,33 @@ class UserDetailActivity : AppCompatActivity(), UserDetailContract.View {
         val queryUserName = this.intent.getStringExtra(EXTRA_USERNAME)
 
         imageview_detail_x.setOnClickListener {
+
             this.finish()
+
         }
 
         setPresenter(UserDetailPresenter())
 
         lifecycleScope.launch{
+
             queryUserName?.let { presenter.loadDetail(it) }
+
         }
 
     }
 
     override fun onDestroy() {
+
         super.onDestroy()
         presenter.detach()
+
     }
 
     override fun setPresenter(presenter: UserDetailContract.Presenter) {
+
         this.presenter = presenter
         presenter.attach(this)
+
     }
 
     override fun onLoadedDetail(user: User) {

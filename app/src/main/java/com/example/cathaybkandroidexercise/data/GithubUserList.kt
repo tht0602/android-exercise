@@ -91,10 +91,12 @@ class GithubUserList(private val serviceUserList: GithubService) {
     }
 
     private fun sortUsersById(): List<User> {
+
         // from the in memory cache select only the repos whose name or description matches
         // the query. Then order the results.
         // The emit will be no function once emit cache with mutableList, so be careful.
         return inMemoryCache.sortedWith(compareBy<User> { it.id })
+
     }
 }
 

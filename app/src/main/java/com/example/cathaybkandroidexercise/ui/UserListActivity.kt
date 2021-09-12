@@ -41,48 +41,65 @@ class UserListActivity : AppCompatActivity(), UserListContract.View {
 
         recycler_github_list.addOnScrollListener(
             object : RecyclerView.OnScrollListener() {
+
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     val linearLayoutManager = recyclerView.layoutManager as LinearLayoutManager
                     val pastVisibleItems: Int = linearLayoutManager.findFirstVisibleItemPosition()
                     val visibleItemCount: Int = linearLayoutManager.childCount
                     val totalItemCount: Int = linearLayoutManager.itemCount
                     presenter.onScrolled(pastVisibleItems, visibleItemCount, totalItemCount)
+
                 }
             })
 
         lifecycleScope.launch{
             presenter.reloadUserList()
+
         }
     }
 
     override fun onDestroy() {
+
         super.onDestroy()
         presenter.detach()
+
     }
 
     override fun onLoadedList(userList: List<User>) {
+
         val userListAdapter = UserListAdapter(presenter)
         recycler_github_list.adapter = userListAdapter
+
     }
 
     @SuppressLint("NotifyDataSetChanged")
     override fun onLoadedMoreList(userList: List<User>) {
+
         recycler_github_list.adapter?.notifyDataSetChanged()
+
     }
 
     override fun onLoadedListError(message: String) {
+
         Toast.makeText(this, "LoadedListError: $String}", Toast.LENGTH_LONG ).show()
+
     }
 
     override fun onScrolledToBottom() {
+
         lifecycleScope.launch{
+
             presenter.loadMoreUserList()
+
         }
+
     }
 
     override fun setPresenter(presenter: UserListContract.Presenter) {
+
         this.presenter = presenter
         presenter.attach(this)
+
     }
 
 
