@@ -33,43 +33,56 @@ class UserListPresenter (
 
 
     override fun attach(view: UserListContract.View) {
+
         this.view = view
         githubUserList = Injection.provideGithubUserList()
+
     }
 
     override fun detach() {
+
         view = null
+
     }
 
     override suspend fun loadMoreUserList() {
+
         val result = githubUserList.requestMore()
         println("response $result")
         parserResult(result)
+
     }
 
     override fun onScrolled(pastVisibleItems: Int, visibleItemCount: Int, totalItemCount: Int) {
+
         if (pastVisibleItems + visibleItemCount + VISIBLE_THRESHOLD >= totalItemCount) {
+
             view?.onScrolledToBottom()
+
         }
+
     }
 
     override fun getUserListCount() : Int{
+
         userList?.let { return it.size }
         return 0
+
     }
 
     override fun onBindViewHolder(userItemView: UserListContract.UserItemView, position: Int) {
+
         userList?.let{
             val user = it[position]
             userItemView.bindData(user, position)
         }
+
     }
     override suspend fun reloadUserList() {
 
         val result = githubUserList.getUserListResultStream()
         println("response $result")
         parserResult(result)
-
 
     }
 

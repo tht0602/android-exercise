@@ -29,7 +29,9 @@ object Injection {
      * Creates an instance of [GithubUserList] based on the [GithubService]
      */
     fun provideGithubUserList(): GithubUserList {
+
         return GithubUserList(GithubService.create())
+
     }
 
 }
