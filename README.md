@@ -1,6 +1,7 @@
 # android-exercise
-An android exercise with Kotlin for test
-Loads users list on https://api.github.com/ and show on a Recycleview
+An android exercise with Kotlin for test.
+
+Loads users list on https://api.github.com/ and shows on a Recycleview
 
 # license
 Copyright 2021 tht0602
